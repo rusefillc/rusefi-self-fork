@@ -48,21 +48,21 @@ jobs:
           RUSEFI_ANDROID_KEYPASS: ${{ secrets.RUSEFI_ANDROID_KEYPASS }}
         working-directory: ./android
         run: |
-          if [ "${{github.event_name}}" == "push" ]; then
+          if [ "${{github.repository}}" == "rusefi/rusefi" && "${{github.event_name}}" == "push" ]; then
             bash ./gradlew build
           else
             bash ./gradlew bundleDebug test
           fi
 
       - name: Upload APK - release
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.repository == 'rusefi/rusefi' && github.event_name == 'push' }}
         uses: actions/upload-artifact@v3
         with:
           name: rusEFI-release
           path: ./android/app/build/outputs/apk/release/rusEFI-release.apk
 
       - name: Upload APK - unsigned
-        if: ${{ github.event_name != 'push' }}
+        if: ${{ github.repository != 'rusefi/rusefi' || github.event_name != 'push' }}
         uses: actions/upload-artifact@v3
         with:
           name: rusEFI-release-unsigned
@@ -72,6 +72,6 @@ jobs:
         run: sudo apt-get install sshpass
 
       - name: Upload rusEFI Android application
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        if: ${{ github.repository == 'rusefi/rusefi' && github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         working-directory: .
         run: java_console/upload_file.sh ${{ secrets.RUSEFI_SSH_USER }} ${{ secrets.RUSEFI_SSH_PASS }} ${{ secrets.RUSEFI_SSH_SERVER }} build_server android/app/build/outputs/apk/release/rusEFI-release.apk
