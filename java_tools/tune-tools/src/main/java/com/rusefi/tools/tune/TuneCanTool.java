@@ -59,26 +59,11 @@ public class TuneCanTool {
 
 
     public static void main(String[] args) throws Exception {
-        //writeDiffBetweenLocalTuneFileAndDefaultTune("../1.msq");
+        TuneCanToolRunner.initialize("C:\\stuff\\fw\\fw-iws\\generated\\tunerstudio\\generated\\rusefi_hd81.ini");
 
-//        TuneCanToolRunner.initialize("C:\\stuff\\fw\\generated\\tunerstudio\\generated\\rusefi_.ini");
-        TuneCanToolRunner.initialize(INI_FILE_FOR_SIMULATOR);
+        writeDiffBetweenLocalTuneFileAndDefaultTune("harley", "C:\\stuff\\fw\\fw-iws\\generated\\simulator_tune_HARLEY.msq",
+                "c:\\stuff\\hd-iws\\tunes\\2024-1-fargo-121-Norman-Final-VVT.msq","comment", "");
 
-//        writeDiffBetweenLocalTuneFileAndDefaultTune("harley", "C:\\stuff\\fw\\fw-\\generated\\simulator_tune_HARLEY.msq",
-//            "c:\\stuff\\hd-\\tunes\\pnp-april-8-inverted-offsets.msq","comment", "");
-
-
-//        writeDiffBetweenLocalTuneFileAndDefaultTune("vehicleName", getDefaultTuneName(engine_type_e.HONDA_OBD1),
-//            "C:\\stuff\\\\2024-03-09-CurrentTune.msq", "comment", "");
-
-        writeDiffBetweenLocalTuneFileAndDefaultTune("canam", "C:\\stuff\\fw\\fw-\\generated\\simulator_tune_MAVERICK_X3.msq",
-            "C:\\stuff\\i\\!snapshots\\2024-07-16_14.28.35_default_cal_001.msq", "comment", "");
-
-
-//        handle("Mitsubicha", 1258);
-//        handle("Scion-1NZ-FE", 1448);
-//        handle("4g93", 1425);
-//        handle("BMW-mtmotorsport", 1479);
     }
 
     /**
@@ -105,16 +90,6 @@ public class TuneCanTool {
 
         writeDiffBetweenLocalTuneFileAndDefaultTune(vehicleName, defaultTuneFileName, customTuneFileName, url, methodNamePrefix);
     }
-
-    private static void writeDiffBetweenLocalTuneFileAndDefaultTune(String localFileName) throws JAXBException, IOException {
-        writeDiffBetweenLocalTuneFileAndDefaultTune("vehicleName", DEFAULT_TUNE,
-            localFileName, "comment", "");
-    }
-//
-//    private static void writeDiffBetweenLocalTuneFileAndDefaultTune(int engineCode, String localFileName, String cannedComment) throws JAXBException, IOException {
-//        writeDiffBetweenLocalTuneFileAndDefaultTune("vehicleName", getDefaultTuneName(engineCode),
-//            localFileName,  cannedComment);
-//    }
 
     public static void writeDiffBetweenLocalTuneFileAndDefaultTune(String vehicleName, String defaultTuneFileName, String customTuneFileName, String cannedComment, String methodNamePrefix) throws JAXBException, IOException {
         new File(REPORTS_OUTPUT_FOLDER).mkdir();
